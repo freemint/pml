@@ -3,17 +3,25 @@ CROSSLIB = $(CROSSDIR)/lib
 CROSSBIN = $(CROSSDIR)/bin
 CROSSINC = $(CROSSDIR)/include
 
-ALL = libpml.a libpml32.a
+ALL = libm16.a libm16020.a libm.a libm020.a
 
 all : $(ALL)
 
-libpml.a :
+libm16.a :
 	make -f Makefile.16 clean
-	make -f Makefile.16 libpml.a
+	make -f Makefile.16 libm16.a
 
-libpml32.a :
+libm16020.a :
+	make -f Makefile.16020 clean
+	make -f Makefile.16020 libm16020.a
+
+libm.a :
 	make -f Makefile.32 clean
-	make -f Makefile.32 libpml32.a
+	make -f Makefile.32 libm.a
+
+libm020.a :
+	make -f Makefile.32020 clean
+	make -f Makefile.32020 libm020.a
 
 install : $(ALL)
 	cp libpml.a libpml32.a $(CROSSLIB)
@@ -21,4 +29,6 @@ install : $(ALL)
 
 clean:
 	make -f Makefile.16 clean
+	make -f Makefile.16020 clean
 	make -f Makefile.32 clean
+	make -f Makefile.32020 clean

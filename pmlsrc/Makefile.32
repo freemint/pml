@@ -15,14 +15,11 @@
 #	they will be loaded into the library archive.  Although
 #	some machines support randomly ordered libraries, ordering
 #	them correctly doesn't hurt...
-CROSSDIR = /dsrg/bammi/cross-minix
-CROSSLIB = $(CROSSDIR)/lib
-CROSSBIN = $(CROSSDIR)/bin
-CROSSINC = $(CROSSDIR)/include
 
-AR = /dsrg/bammi/cross-gcc/bin/car
-CC = $(CROSSBIN)/mgcc
-CFLAGS = -O2 -DIEEE -DNO_DBUG -D__GCC_HACK__ -I.
+AR = ar
+RANLIB = ranlib
+CC = gcc
+CFLAGS = -O2 -fomit-frame-pointer -DIEEE -DNO_DBUG -D__GCC_HACK__ -I.
 
 LIB = $(CROSSLIB)
 
@@ -50,11 +47,12 @@ OBJ =		$(LEVEL4) $(LEVEL3) $(LEVEL2) $(LEVEL1) $(LEVEL0)
 #	The default thing to make.
 #
 
-default:	libpml32.a
+default:	libm.a
 
-libpml32.a:	$(OBJ)
-		rm -f libpml32.a
-		$(AR) srv libpml32.a $(OBJ)
+libm.a:		$(OBJ)
+		rm -f $@
+		$(AR) srv $@ $(OBJ)
+		$(RANLIB) $@
 
 $(OBJ) :	pml.h
 
@@ -62,10 +60,10 @@ $(OBJ) :	pml.h
 #	Stuff to do installation
 #
 
-install :	$(LIB)/libpml32.a $(INC)/pmluser.h
+install :	$(LIB)/libm.a $(INC)/pmluser.h
 
-$(LIB)/libpml32.a:	libpml32.a
-			cp libpml32.a $(LIB)/libpml32.a
+$(LIB)/libm.a:		libm.a
+			cp libm.a $(LIB)/libm.a
 
 $(INC)/pmluser.h :	pmluser.h
 			cp pmluser.h $(INC)/pmluser.h
@@ -75,4 +73,4 @@ $(INC)/pmluser.h :	pmluser.h
 #
 
 clean:
-	rm -f *.o *.BAK libpml32.a *.tmp *.bak nohup.out
+	rm -f *.o *.BAK libm.a *.tmp *.bak nohup.out

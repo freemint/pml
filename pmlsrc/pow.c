@@ -7,6 +7,7 @@
 #include	<math.h>
 int errno;
 
+#ifndef __M68020__
 #if __STDC__
 double log(double), exp(double);
 #else
@@ -46,3 +47,4 @@ domain:
 	errno = EDOM;
 	return(HUGE_VAL);
 }
+#endif

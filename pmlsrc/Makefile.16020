@@ -19,7 +19,7 @@
 AR = ar
 RANLIB = ranlib
 CC = gcc
-CFLAGS = -mshort -O2 -fomit-frame-pointer -DIEEE -DNO_DBUG -D__GCC_HACK__ -I.
+CFLAGS = -mshort -O2 -fomit-frame-pointer -m68020-60 -DIEEE -DNO_DBUG -D__GCC_HACK__ -I.
 
 LIB = $(CROSSLIB)
 
@@ -47,9 +47,9 @@ OBJ =		$(LEVEL4) $(LEVEL3) $(LEVEL2) $(LEVEL1) $(LEVEL0)
 #	The default thing to make.
 #
 
-default:	libm16.a
+default:	libm16020.a
 
-libm16.a:	$(OBJ)
+libm16020.a:	$(OBJ)
 		rm -f $@
 		$(AR) srv $@ $(OBJ)
 		$(RANLIB) $@
@@ -60,10 +60,10 @@ $(OBJ) :	pml.h
 #	Stuff to do installation
 #
 
-install :	$(LIB)/libm16.a $(INC)/pmluser.h
+install :	$(LIB)/libm16020.a $(INC)/pmluser.h
 
-$(LIB)/libm16.a:	libm16.a
-			cp libm16.a $(LIB)/libpml.a
+$(LIB)/libm16020.a:	libm16020.a
+			cp libm16020.a $(LIB)/libpml.a
 
 $(INC)/pmluser.h :	pmluser.h
 			cp pmluser.h $(INC)/pmluser.h
@@ -73,4 +73,4 @@ $(INC)/pmluser.h :	pmluser.h
 #
 
 clean:
-	rm -f *.o *.BAK libm16.a *.tmp *.bak nohup.out
+	rm -f *.o *.BAK libm16020.a *.tmp *.bak nohup.out
