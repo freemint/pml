@@ -61,20 +61,20 @@ ifneq (,$(findstring sfp004,$(m)))
 endif
 
 LOADLIBES := $(PML) $(GNU)
-LDFLAGS = -x -s
+LDFLAGS = -s
 
 ifneq (,$(findstring true,$(gdb)))
 
 CFLAGS := $(CFLAGS) $(addprefix  ,-g)
 define link
- $(LD) $< $(LOADLIBES) $(LDFLAGS) -o $@
+ $(LD) $< $(LDFLAGS) -o $@ $(LOADLIBES) 
  $(SLD) $*.sym $(GNULIB)/crt0.o $(LOADLIBES) -o $@
 endef
 
 else
 
 define link
- $(LD) $< $(LOADLIBES) $(LDFLAGS) -o $@
+ $(LD) $< $(LDFLAGS) -o $@ $(LOADLIBES) 
 endef
 endif
 

@@ -55,7 +55,9 @@
 #undef max
 #endif
 
-double max (double x, double y)
+double max (x, y)
+double x;
+double y;
 {
     ENTER ("max");
     DEBUG4 ("maxin", "x = %le  y = %le", x, y);

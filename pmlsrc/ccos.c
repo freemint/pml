@@ -79,12 +79,20 @@ COMPLEX z;
 }
 #endif !defined (__M68881__) && !defined (sfp004)
 
-#ifdef	__M68881__
+#if defined (__M68881__) || defined (sfp004)
+# ifdef ERROR_CHECK	/* no error checking for now	*/
 __asm("
 .text
 _funcname:
 	.ascii	\"ccos\\0\"
 	.even
+");	/* end asm	*/
+# endif ERROR_CHECK
+#endif defined (__M68881__) || defined (sfp004)
+
+#ifdef	__M68881__
+__asm("
+.text
 	.globl _ccos
 _ccos:
 	movel	a1,d0		| save a1 as return value

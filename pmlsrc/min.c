@@ -55,7 +55,9 @@
 #undef min
 #endif
 
-double min (double x, double y)
+double min (x, y)
+double x;
+double y;
 {
     ENTER ("min");
     DEBUG4 ("minin", "x = %le  y = %le", x, y);

@@ -209,7 +209,7 @@ double hypot(double x, double y)
 {
     return sqrt(x*x + y*y);
 }
-#else	/*  __M68881__, sfp004	*/
+#endif	/*  __M68881__, sfp004	*/
 
 #ifdef	sfp004
 
@@ -398,7 +398,7 @@ __asm("
 	movel	a0@(zahl),d1
 ");
 #endif	sfp004
-#ifdef ERROR_CHECK
+#if ( defined (__M68881__) || defined (sfp004) ) && defined (ERROR_CHECK)
 
 __asm("bra err");
 
@@ -407,4 +407,3 @@ __asm("bra err");
 __asm("rts");
 
 #endif	ERROR_CHECK
-#endif /*  __M68881__, sfp004	*/

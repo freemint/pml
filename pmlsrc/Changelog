@@ -303,3 +303,27 @@ atan2.c:: Howard Chu
 	build some -m68020 -m68881 libraries for the Falcon...
 
 ---------------------------- Patchlevel 21 ------------------------------
+
+ccos.c, csin.c:: Stefan Steyer (dc4i@br0.hrz.th-darmstadt.de)
+	Corrections for building library with spf and ERROR_CHECK.
+
+---------------------------- Patchlevel 22 ------------------------------
+
+ccos.c, ccsin.c:: Stefan Steyer (dc4i@br0.hrz.th-darmstadt.de)
+	Corrected bug introduced in the last patch. thanks to
+	Christian_Felsch@hh.maus.de for pointing it out.
+
+makefile.pml:: ++jrb
+	Make lib with NO_INLINE_MATH to back up 68881 code where math-68881.h
+	is not used (ie the inline definitions therein are not used).
+
+math.h:: ++jrb
+	sync up with changes to math.h in main lib to support
+	NO_INLINE_MATH
+
+mod.c:: michal -- thanks michal
+	fmod() from PML, when coprocessor not present, is defined in a
+        manner which is formally  correct, but it is loosing
+	precision. fix provided.
+
+---------------------------- Patchlevel 23 ------------------------------

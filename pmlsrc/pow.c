@@ -13,7 +13,7 @@ double log(double), exp(double);
 double log(), exp();
 #endif
 
-double
+double 
 pow(x,y)
 double x, y;
 {

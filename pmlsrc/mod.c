@@ -61,10 +61,8 @@ double base;
 {
     double intpart;
 
-    value /= base;
-    value = modf (value, &intpart);
-    value *= base;
-    return (value);
+    (void) modf (value/base, &intpart);
+    return(value - base * intpart);
 }
 #endif	/* __M68881, sfp004	*/
 #ifdef	sfp004

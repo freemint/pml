@@ -76,7 +76,7 @@ typedef enum  {
 
 struct exception {
 	exception_type	type;	/* exception type */
-	char		*name;	/* function in which it occured */
+	const char	*name;	/* function in which it occured */
 	double		arg1;	/* an arg */
 	double		arg2;	/* another arg */
 	double		retval; /* val to return */
@@ -100,12 +100,20 @@ struct exception {
 
 extern const double _infinitydf;	/* in normdf.cpp */
 
-#define HUGE_VAL  (_infinitydf)
-#define HUGE HUGE_VAL
 
-#ifdef _M68881
-#include <math-68881.h>
+#if defined(__GNUC_INLINE__) && (!defined(NO_INLINE_MATH)) && (defined(_M68881) || defined(__M68881__))
+#  define _INLINE_MATH 1
+#else
+#  define _INLINE_MATH 0
 #endif
+
+#if _INLINE_MATH
+#  include <math-68881.h>
+#else
+#  define HUGE_VAL  (_infinitydf)
+#endif
+
+#define HUGE HUGE_VAL
 
 #ifdef __GNUC__
 # ifndef __cplusplus
@@ -116,40 +124,44 @@ extern const double _infinitydf;	/* in normdf.cpp */
 # endif
 #endif
 
-#ifndef _M68881
-__EXTERN double	acos	__PROTO((double));
-__EXTERN double asin	__PROTO((double));
-__EXTERN double atan	__PROTO((double));
-__EXTERN double atanh	__PROTO((double));
+#if !_INLINE_MATH
+__EXTERN double sin	__PROTO((double));
 __EXTERN double cos	__PROTO((double));
+__EXTERN double tan	__PROTO((double));
+__EXTERN double asin	__PROTO((double));
+__EXTERN double	acos	__PROTO((double));
+__EXTERN double atan	__PROTO((double));
+__EXTERN double atan2	__PROTO((double, double));
+__EXTERN double sinh	__PROTO((double));
 __EXTERN double cosh	__PROTO((double));
-__EXTERN double fabs	__PROTO((double));
-__EXTERN double dabs	__PROTO((double));
-
+__EXTERN double tanh	__PROTO((double));
+__EXTERN double atanh	__PROTO((double));
 __EXTERN double exp	__PROTO((double));
 __EXTERN double log	__PROTO((double));
 __EXTERN double log10	__PROTO((double));
-__EXTERN double fmod	__PROTO((double, double));
-__EXTERN double sin	__PROTO((double));
-__EXTERN double sinh	__PROTO((double));
 __EXTERN double sqrt	__PROTO((double));
 __EXTERN double hypot   __PROTO((double, double));
-__EXTERN double tan	__PROTO((double));
-__EXTERN double tanh	__PROTO((double));
-__EXTERN double floor	__PROTO((double));
+__EXTERN double pow	__PROTO((double, double));
+__EXTERN double fabs	__PROTO((double));
 __EXTERN double ceil	__PROTO((double));
+__EXTERN double floor	__PROTO((double));
 __EXTERN double rint	__PROTO((double));
+__EXTERN double fmod	__PROTO((double, double));
+
+__EXTERN double ldexp	__PROTO((double, int));
+__EXTERN double frexp	__PROTO((double, int *));
+__EXTERN double modf	__PROTO((double, double *));
+#endif
 
 __EXTERN double acosh	__PROTO((double));
 __EXTERN double asinh	__PROTO((double));
-__EXTERN double atan2	__PROTO((double, double));
-__EXTERN double pow	__PROTO((double, double));
-#endif
 
 #ifndef __STRICT_ANSI__
 
-#ifdef _M68881
+#if _INLINE_MATH
 #  define dabs(x) fabs(x)
+#else
+__EXTERN double dabs	__PROTO((double));
 #endif
 
 __EXTERN double copysign	__PROTO((double, double));
@@ -183,12 +195,6 @@ __EXTERN int pmlsfs	__PROTO((int, int));
 __EXTERN double poly	__PROTO((int, double *, double));
 
 #endif /* __STRICT_ANSI__ */
-
-#ifndef _M68881
-__EXTERN double modf	__PROTO((double, double *));
-__EXTERN double ldexp	__PROTO((double, int));
-__EXTERN double frexp	__PROTO((double, int *));
-#endif /* !_M68881 */
 
 #endif /* __TURBOC__ */
 

@@ -100,13 +100,13 @@ endef
 endif
 
 ifneq (,$(findstring true,$(s)))
- CFLAGS	:= $(CFLAGS) $(addprefix  ,-D__MSHORT__ -mshort)
+ CFLAGS	:= $(CFLAGS) $(addprefix  , -mshort)
  PFLAGS	:= $(PFLAGS) $(addprefix  ,-D__MSHORT__)
  OUTLIB	:= $(subst .olb,16.olb, $(OUTLIB))
 endif
 
 ifneq (,$(findstring 881,$(m)))
- CFLAGS	:= $(CFLAGS) $(addprefix  ,-m68020 -m68881 -D__M68881__)
+ CFLAGS	:= $(CFLAGS) $(addprefix  ,-m68020 -m68881 -DNO_INLINE_MATH)
  OUTLIB	:= $(subst .olb,020.olb, $(OUTLIB))
 endif
 
