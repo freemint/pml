@@ -22,14 +22,14 @@ CROSSINC = $(CROSSDIR)/include
 
 AR = /dsrg/bammi/cross-gcc/bin/car
 CC = $(CROSSBIN)/mgcc
-CFLAGS = -mshort -O -DIEEE -DNO_DBUG -D__GCC_HACK__ -I.
+CFLAGS = -mshort -O2 -DIEEE -DNO_DBUG -D__GCC_HACK__ -I.
 
 LIB = $(CROSSLIB)
 
 INC = $(CROSSINC)
 
 
-LEVEL0 =	matherr.o
+LEVEL0 =	matherr.o ident.o
 
 LEVEL1 =	sign.o mod.o poly.o dabs.o sqrt.o rint.o
 

@@ -38,9 +38,19 @@
  */
 
 
-#if defined(__cplusplus)
+#ifndef _COMPILER_H
+#include <compiler.h>
+#endif
+
+#ifdef __cplusplus
 extern "C" {
 #endif
+
+#ifdef __TURBOC__
+
+#include <tcmath.h>
+
+#else
 
 #ifndef __STRICT_ANSI__
 /*
@@ -72,6 +82,20 @@ struct exception {
 	double		retval; /* val to return */
 };
 
+#define M_LN2                0.69314718055994530942
+#define M_PI         3.14159265358979323846
+#define M_SQRT2              1.41421356237309504880
+#define M_E          2.7182818284590452354
+#define M_LOG2E              1.4426950408889634074
+#define M_LOG10E     0.43429448190325182765
+#define M_LN10               2.30258509299404568402
+#define M_PI_2               1.57079632679489661923
+#define M_PI_4               0.78539816339744830962
+#define M_1_PI               0.31830988618379067154
+#define M_2_PI               0.63661977236758134308
+#define M_2_SQRTPI   1.12837916709551257390
+#define M_SQRT1_2    0.70710678118654752440
+
 #endif /* __STRICT_ANSI__ */
 
 extern const double _infinitydf;	/* in normdf.cpp */
@@ -83,15 +107,13 @@ extern const double _infinitydf;	/* in normdf.cpp */
 #include <math-68881.h>
 #endif
 
-#if defined(__GNUC__) && (!defined(__cplusplus))
-#ifndef max
-#define max(x,y) ({typeof(x) _x=(x); typeof(y) _y=(y); if (_x>_y) _y=_x; _y;})
-#define min(x,y) ({typeof(x) _x=(x); typeof(y) _y=(y); if (_x<_y) _y=_x; _y;})
-#endif
-#endif
-
-#ifndef _COMPILER_H
-#include <compiler.h>
+#ifdef __GNUC__
+# ifndef __cplusplus
+#  ifndef max
+#   define max(x,y) ({typeof(x) _x=(x); typeof(y) _y=(y); if (_x>_y) _y=_x; _y;})
+#   define min(x,y) ({typeof(x) _x=(x); typeof(y) _y=(y); if (_x<_y) _y=_x; _y;})
+#  endif
+# endif
 #endif
 
 #ifndef _M68881
@@ -168,7 +190,9 @@ __EXTERN double ldexp	__PROTO((double, int));
 __EXTERN double frexp	__PROTO((double, int *));
 #endif /* !_M68881 */
 
-#if defined(__cplusplus)
+#endif /* __TURBOC__ */
+
+#ifdef __cplusplus
 }
 #endif
 

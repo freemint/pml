@@ -143,14 +143,14 @@ _atan2:
 	blt	1f		| x < 0!
 				| x > 0: return atan(y/x)
 
-	fmoved	sp@(4)@,fp0	| get y
+	fmoved	sp@(4),fp0	| get y
 	fdivd	sp@(12),fp0	| y/x	
 	fatanx	fp0,fp0		| atan(y/x)
 	bra 3f			| return
 1:				| x < 0
 
 	fmovecr	#0,fp1		| get pi
-	fmoved	sp@(4)@,fp0	| get y
+	fmoved	sp@(4),fp0	| get y
 	fdivd	sp@(12),fp0	| y/x
 	fatanx	fp0,fp0		| atan(y/x)
 	btst	#31,sp@(4)	| sign(y)

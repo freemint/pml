@@ -11,8 +11,7 @@ double	modf();
 #endif
 
 double
-floor(x)
-double x;
+floor(double x)
 {
  double fract;
 
@@ -25,8 +24,7 @@ double x;
 }
 
 double
-ceil(x)
-double x;
+ceil(double x)
 {
 	return(-floor(-x));
 }

@@ -69,7 +69,7 @@
 
 
 DEFINE	:= -DIEEE -Datarist 
-OPT	:= -O
+OPT	:= -O2
 OFLAGS	:= -fomit-frame-pointer -fstrength-reduce 
 OUTLIB	:= pml.olb
 
@@ -117,7 +117,7 @@ endif
 
 LEVEL0	:=	cerr.o
 
-LEVEL0a	:=	matherr.o
+LEVEL0a	:=	matherr.o ident.o
 
 LEVEL1	:=	sign.o mod.o poly.o dabs.o sqrt.o rint.o
 

@@ -285,3 +285,21 @@ log.c, log10.c:: andreas
 	(assignment to index will be moved to end of function)
 
 ---------------------------- Patchlevel 18 ------------------------------
+
+ident.c:: ++jrb
+	new file with ident string.
+
+Makefile.??:: ++jrb
+	add target for ident.o
+
+---------------------------- Patchlevel 19 ------------------------------
+
+sqrt.c:: Michal Jaegermann
+	major hacks. see the comments at the top.
+
+---------------------------- Patchlevel 20 ------------------------------
+atan2.c:: Howard Chu
+	There is a simple typo in atan2.c which I encountered while trying to
+	build some -m68020 -m68881 libraries for the Falcon...
+
+---------------------------- Patchlevel 21 ------------------------------

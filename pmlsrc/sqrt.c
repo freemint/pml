@@ -17,7 +17,7 @@
  ************************************************************************
  */
 
-
+
 /*
  *  FUNCTION
  *
@@ -116,26 +116,31 @@
  *	machine I tried.
  *
  */
- 
+
 /*
  *  MODIFICATIONS
  *
- *	This routine modified to use polynomial, instead of rational,
- *	approximation with coefficients
+ *	Function sqrt(x) is initially approximated on an
+ *      interval [0.5..2.0] by a quadratic polynomial with
+ *	the following coefficients
  *
- *		P0  0.22906994529e+00
- *		P1  0.13006690496e+01
- *		P2 -0.90932104982e+00
- *		P3  0.50104207633e+00
- *		P4 -0.12146838249e+00
+ *		 P0  0.3608580479718948e+00
+ *		 P1  0.7477707028388739e+00
+ *		 P2 -0.1105464728191369e+00
  *
- *	as given by Hart (op. cit.) in SQRT 0132.  This approximation
- *	gives around 5 digits correct.  Two applications of Heron's
- *	approximation will give more then practically achievable
- *	13-15 decimal digits.  Multiplications by powers of 2 are
- *	replaced by explicit calls to ldexp.
+ *	These coefficients were computed with a help of Maple
+ *	symbolic algebra system.  Longer approximation interval
+ *	is used in order to avoid multiplication by SQRT2
+ *	constant in case of odd exponents (this idea comes from
+ *	Olaf Flebbe, flebbe@tat.physik.uni-tuebingen.de).  With
+ *	64 bit IEEE representation three Heron's iterations are
+ *	good enough to satisfy essential requirements of Paranoia
+ *	test suite. An absolute error after three iterations is
+ *	below 2e-19 over the whole range (below 5e-10 after two).
+ *	Multiplications by powers of 2 are performed by explicit
+ *	calls to ldexp.
  *
- *	Michal Jaegermann, 24 October 1990
+ *	Michal Jaegermann, 21 October 1992
  */
 
 #if !defined (__M68881__) && !defined (sfp004)
@@ -144,40 +149,20 @@
 #include <math.h>
 #include "pml.h"
 
-#ifdef OLD
-#define P0 0.594604482			/* Approximation coeff	*/
-#define P1 2.54164041			/* Approximation coeff	*/
-#define Q0 2.13725758			/* Approximation coeff	*/
-#define Q1 1.0				/* Approximation coeff	*/
-
-#define ITERATIONS 3			/* Number of iterations	*/
-
-#endif
-
-#define P0  0.22906994529e+00		/* Hart SQRT 0132 */
-#define P1  0.13006690496e+01
-#define P2 -0.90932104982e+00
-#define P3  0.50104207633e+00
-#define P4 -0.12146838249e+00
+#define P0  0.3608580479718948e+00
+#define P1  0.7477707028388739e+00
+#define P2 -0.1105464728191369e+00
 
 static char funcname[] = "sqrt";
 
 double sqrt (x)
 double x;
 {
-#ifdef OLD
     int k;
-    register int bugfix;
-    register int kmod2;
-    register int count;
-    int exponent;
-    double y;
-#else
-    int k;
-#endif
     double m;
     double u;
     struct exception xcpt;
+    register double (*dfunc)(double, int) = ldexp;
 
     if (x == 0.0) {
 	xcpt.retval = 0.0;
@@ -192,31 +177,30 @@ double x;
 	}
     } else {
 	m = frexp (x, &k);
-#ifdef OLD
-	u = (P0 + (P1 * m)) / (Q0 + (Q1 * m));
-	for (count = 0, y = u; count < ITERATIONS; count++) {
-	    y = 0.5 * (y + (m / y));
-	}
-	if ((kmod2 = (k % 2)) < 0) {
-	    y /= SQRT2;
-	} else if (kmod2 > 0) {
-	    y *= SQRT2;
-	}
-	bugfix = 2;
-	xcpt.retval = ldexp (y, k/bugfix);
-#else
-	u = (((P4 * m + P3) * m + P2) * m + P1) * m + P0;
-	u = ldexp((u + (m / u)), -1);	/* Heron's iteration */
-	u += m / u;			/* and a part of the second one */
 	if (k & 1) {
-	    u *= SQRT2;
+	    m = dfunc(m, 1);
+	    /*
+	     * multiply by 2 if our exponent was odd;
+	     * odd k is now too big by 1 but (k >> 1) will take
+	     * care of that
+	     */
 	}
+	u = (P2 * m + P1) * m + P0;	/* the first guess   */
+
+	u = dfunc((u + (m / u)), -1);	/* Heron's iteration */
+#ifndef __SOZOBON__
+	/*
+	 * with current floating point representation used
+	 * by Sozobon C we are already below achievable precision
+	 */
+ 	u = dfunc((u + (m / u)), -1);   /* one more          */
+#endif /* __SOZOBON__ */
 	/*
 	 * here we rely on the fact that -3/2 and (-3 >> 1)
-	 * do give different results
+	 * do give different results;
+	 * the last iteration and adjust final exponent properly
 	 */
-	xcpt.retval = ldexp (u, (k >> 1) - 1);
-#endif
+	xcpt.retval = dfunc (u + (m / u), (k >> 1) - 1);
     }
     return (xcpt.retval);
 }
@@ -225,7 +209,7 @@ double hypot(double x, double y)
 {
     return sqrt(x*x + y*y);
 }
-#endif	/*  __M68881__, sfp004	*/
+#else	/*  __M68881__, sfp004	*/
 
 #ifdef	sfp004
 
@@ -414,7 +398,7 @@ __asm("
 	movel	a0@(zahl),d1
 ");
 #endif	sfp004
-#if ( defined (__M68881__) || defined (sfp004) ) && defined (ERROR_CHECK)
+#ifdef ERROR_CHECK
 
 __asm("bra err");
 
@@ -423,3 +407,4 @@ __asm("bra err");
 __asm("rts");
 
 #endif	ERROR_CHECK
+#endif /*  __M68881__, sfp004	*/
