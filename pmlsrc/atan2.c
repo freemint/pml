@@ -128,55 +128,55 @@ double x;
 
 #endif !defined (__M68881__) && !defined (sfp004)
 #ifdef	__M68881__
-__asm("
-.text
-.even
-_funcname:
-	.ascii	\"atan2\\0\"
-	.even
-
-.globl	_atan2
-_atan2:
-| denormalized numbers are treated as 0
-	tstl	sp@(12)
-	beq	5f		| x == 0!
-	blt	1f		| x < 0!
-				| x > 0: return atan(y/x)
-
-	fmoved	sp@(4),fp0	| get y
-	fdivd	sp@(12),fp0	| y/x	
-	fatanx	fp0,fp0		| atan(y/x)
-	bra 3f			| return
-1:				| x < 0
-
-	fmovecr	#0,fp1		| get pi
-	fmoved	sp@(4),fp0	| get y
-	fdivd	sp@(12),fp0	| y/x
-	fatanx	fp0,fp0		| atan(y/x)
-	btst	#31,sp@(4)	| sign(y)
-	beq	2f		| positive!
-
-	fnegx	fp1,fp1		| transfer sign
-2:	faddx	fp1,fp0		| sign(y)*pi + atan(y/x)
-|	bra 3f			| return
-3:
-	fmoved	fp0,sp@-	| return result
-	moveml	sp@+,d0/d1
-4:	
-	rts			| sigh.
-5:				| x == 0
-	movel	#1073291771,d0	| pi/2
-	movel	#1413754136,d1	|
-
-	tstl	sp@(4)		| 
-	beq	6f		| NaN
-	bge	4b		| exit
-	bset	#31,d0		| x < 0 : return -pi/2
-	bra	4b
-6:	movel	#-1,d0		| NaN
-	movel	#-1,d1		|
-	bra	4b
-");	/* end asm	*/
+__asm(
+".text\t\n"
+".even\t\n"
+"_funcname:\t\n"
+"	.ascii	\"atan2\\0\"\t\n"
+"	.even\t\n"
+"\t\n"
+".globl	_atan2\t\n"
+"_atan2:\t\n"
+"| denormalized numbers are treated as 0\t\n"
+"	tstl	sp@(12)\t\n"
+"	beq	5f		| x == 0!\t\n"
+"	blt	1f		| x < 0!\t\n"
+"				| x > 0: return atan(y/x)\t\n"
+"\t\n"
+"	fmoved	sp@(4),fp0	| get y\t\n"
+"	fdivd	sp@(12),fp0	| y/x\t\n"
+"	fatanx	fp0,fp0		| atan(y/x)\t\n"
+"	bra 3f			| return\t\n"
+"1:				| x < 0\t\n"
+"\t\n"
+"	fmovecr	#0,fp1		| get pi\t\n"
+"	fmoved	sp@(4),fp0	| get y\t\n"
+"	fdivd	sp@(12),fp0	| y/x\t\n"
+"	fatanx	fp0,fp0		| atan(y/x)\t\n"
+"	btst	#31,sp@(4)	| sign(y)\t\n"
+"	beq	2f		| positive!\t\n"
+"\t\n"
+"	fnegx	fp1,fp1		| transfer sign\t\n"
+"2:	faddx	fp1,fp0		| sign(y)*pi + atan(y/x)\t\n"
+"|	bra 3f			| return\t\n"
+"3:\t\n"
+"	fmoved	fp0,sp@-	| return result\t\n"
+"	moveml	sp@+,d0/d1\t\n"
+"4:	\t\n"
+"	rts			| sigh.\t\n"
+"5:				| x == 0\t\n"
+"	movel	#1073291771,d0	| pi/2\t\n"
+"	movel	#1413754136,d1	|\t\n"
+"\t\n"
+"	tstl	sp@(4)		| \t\n"
+"	beq	6f		| NaN\t\n"
+"	bge	4b		| exit\t\n"
+"	bset	#31,d0		| x < 0 : return -pi/2\t\n"
+"	bra	4b\t\n"
+"6:	movel	#-1,d0		| NaN\t\n"
+"	movel	#-1,d1		|\t\n"
+"	bra	4b\t\n"
+);	/* end asm	*/
 #endif	__M68881__
 
 #ifdef	sfp004

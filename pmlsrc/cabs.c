@@ -73,58 +73,58 @@ COMPLEX z;
 
 # ifdef	ERROR_CHECK
 
-    __asm("
-
-_Overflow:
-	.ascii \"OVERFLOW\\0\"
-_Domain:
-	.ascii \"DOMAIN\\0\"
-_Error_String:
-	.ascii \"cos: %s error\\n\\0\"
-.even
-| m.ritzert 7.12.1991
-| ritzert@dfg.dbp.de
-|
-|    /* NAN  = {7fffffff,ffffffff}		*/
-|    /* +Inf = {7ff00000,00000000}		*/
-|    /* -Inf = {fff00000,00000000}		*/
-|    /* MAX_D= {7fee42d1,30773b76}		*/
-|    /* MIN_D= {ffee42d1,30773b76}		*/
-
-.even
-double_max:
-	.long	0x7fee42d1
-	.long	0x30273b76
-double_min:
-	.long	0xffee42d1
-	.long	0x30273b76
-NaN:
-	.long	0x7fffffff
-	.long	0xffffffff
-p_Inf:
-	.long	0x7ff00000
-	.long	0x00000000
-m_Inf:
-	.long	0xfff00000
-	.long	0x00000000
-");
+    __asm(
+"\t\n"
+"_Overflow:\t\n"
+"	.ascii \"OVERFLOW\\0\"\t\n"
+"_Domain:\t\n"
+"	.ascii \"DOMAIN\\0\"\t\n"
+"_Error_String:\t\n"
+"	.ascii \"cos: %s error\\n\\0\"\t\n"
+".even\t\n"
+"| m.ritzert 7.12.1991\t\n"
+"| ritzert@dfg.dbp.de\t\n"
+"|\t\n"
+"|    /* NAN  = {7fffffff,ffffffff}		*/\t\n"
+"|    /* +Inf = {7ff00000,00000000}		*/\t\n"
+"|    /* -Inf = {fff00000,00000000}		*/\t\n"
+"|    /* MAX_D= {7fee42d1,30773b76}		*/\t\n"
+"|    /* MIN_D= {ffee42d1,30773b76}		*/\t\n"
+"\t\n"
+".even\t\n"
+"double_max:\t\n"
+"	.long	0x7fee42d1\t\n"
+"	.long	0x30273b76\t\n"
+"double_min:\t\n"
+"	.long	0xffee42d1\t\n"
+"	.long	0x30273b76\t\n"
+"NaN:\t\n"
+"	.long	0x7fffffff\t\n"
+"	.long	0xffffffff\t\n"
+"p_Inf:\t\n"
+"	.long	0x7ff00000\t\n"
+"	.long	0x00000000\t\n"
+"m_Inf:\t\n"
+"	.long	0xfff00000\t\n"
+"	.long	0x00000000\t\n"
+);
 # endif	ERROR_CHECK
 #endif	/* __M68881, sfp004	*/
 
 #ifdef	__M68881__
-__asm("
-.even
-.globl _cabs
-_cabs:
-	fmoved	a7@(4),fp0	|
-	fmulx	fp0,fp0		| x**2
-	fmoved	a7@(12),fp1	|
-	fmulx	fp1,fp1		| y**2
-	faddx	fp1,fp0		|
-	fsqrtx	fp0,fp0		| sqrt( x**2 + y**2 )
-	fmoved	fp0,a7@-	|
-	moveml	a7@+,d0-d1	| return arg
-");
+__asm(
+".even\t\n"
+".globl _cabs\t\n"
+"_cabs:\t\n"
+"	fmoved	a7@(4),fp0	|\t\n"
+"	fmulx	fp0,fp0		| x**2\t\n"
+"	fmoved	a7@(12),fp1	|\t\n"
+"	fmulx	fp1,fp1		| y**2\t\n"
+"	faddx	fp1,fp0		|\t\n"
+"	fsqrtx	fp0,fp0		| sqrt( x**2 + y**2 )\t\n"
+"	fmoved	fp0,a7@-	|\t\n"
+"	moveml	a7@+,d0-d1	| return arg\t\n"
+);
 #endif	__M68881__
 
 #ifdef	sfp004
@@ -193,54 +193,54 @@ _cabs:
 
 #if defined (__M68881__) || defined (sfp004)
 # ifdef ERROR_CHECK
-__asm("
-	lea double_max,a0	|
-	swap	d0		| exponent into lower word
-	cmpw	a0@(16),d0	| == NaN ?
-	beq	error_nan	|
-	cmpw	a0@(24),d0	| == + Infinity ?
-	beq	error_plus	|
-	swap	d0		| result ok,
-	rts			| restore d0
-");
+__asm(
+"	lea double_max,a0	|\t\n"
+"	swap	d0		| exponent into lower word\t\n"
+"	cmpw	a0@(16),d0	| == NaN ?\t\n"
+"	beq	error_nan	|\t\n"
+"	cmpw	a0@(24),d0	| == + Infinity ?\t\n"
+"	beq	error_plus	|\t\n"
+"	swap	d0		| result ok,\t\n"
+"	rts			| restore d0\t\n"
+);
 #ifndef	__MSHORT__
-__asm("
-error_plus:
-	swap	d0
-	moveml	d0-d1,a7@-
-	movel	#63,_errno	| NAN => errno = EDOM
-	pea	_Overflow	| for printf
-	bra	error_exit	|
-error_nan:
-	moveml	a0@(24),d0-d1	| result = +inf
-	moveml	d0-d1,a7@-
-	movel	#62,_errno	| NAN => errno = EDOM
-	pea	_Domain		| for printf
-");
+__asm(
+"error_plus:\t\n"
+"	swap	d0\t\n"
+"	moveml	d0-d1,a7@-\t\n"
+"	movel	#63,_errno	| NAN => errno = EDOM\t\n"
+"	pea	_Overflow	| for printf\t\n"
+"	bra	error_exit	|\t\n"
+"error_nan:\t\n"
+"	moveml	a0@(24),d0-d1	| result = +inf\t\n"
+"	moveml	d0-d1,a7@-\t\n"
+"	movel	#62,_errno	| NAN => errno = EDOM\t\n"
+"	pea	_Domain		| for printf\t\n"
+);
 #else	__MSHORT__
-__asm("
-error_plus:
-	swap	d0
-	moveml	d0-d1,a7@-
-	movew	#63,_errno	| NAN => errno = EDOM
-	pea	_Overflow	| for printf
-	bra	error_exit	|
-error_nan:
-	moveml	a0@(24),d0-d1	| result = +inf
-	moveml	d0-d1,a7@-
-	movew	#62,_errno	| NAN => errno = EDOM
-	pea	_Domain		| for printf
-");
+__asm(
+"error_plus:\t\n"
+"	swap	d0\t\n"
+"	moveml	d0-d1,a7@-\t\n"
+"	movew	#63,_errno	| NAN => errno = EDOM\t\n"
+"	pea	_Overflow	| for printf\t\n"
+"	bra	error_exit	|\t\n"
+"error_nan:\t\n"
+"	moveml	a0@(24),d0-d1	| result = +inf\t\n"
+"	moveml	d0-d1,a7@-\t\n"
+"	movew	#62,_errno	| NAN => errno = EDOM\t\n"
+"	pea	_Domain		| for printf\t\n"
+);
 #endif	__MSHORT__
-__asm("
-error_exit:
-	pea	_Error_String	|
-	pea	__iob+52	|
-	jbsr	_fprintf	|
-	addl	#12,a7		|
-	moveml	a7@+,d0-d1
-	rts
-");	/* end asm	*/
+__asm(
+"error_exit:\t\n"
+"	pea	_Error_String	|\t\n"
+"	pea	__iob+52	|\t\n"
+"	jbsr	_fprintf	|\t\n"
+"	addl	#12,a7		|\t\n"
+"	moveml	a7@+,d0-d1\t\n"
+"	rts\t\n"
+);	/* end asm	*/
 # else	ERROR_CHECK
 __asm("rts");
 # endif	ERROR_CHECK

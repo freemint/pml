@@ -114,40 +114,40 @@ COMPLEX zden;
 }
 #endif !defined (__M68881__) && !defined (sfp004)
 #ifdef	__M68881__
-__asm("
-.text
-.even
-_funcname:
-	.ascii	\"cdiv\\0\"
-	.even
-
-.globl	_cdiv
-_cdiv:
-	fmoved	sp@(4),fp0
-	fmoved	sp@(12),fp1
-	fmoved	sp@(20),fp2
-	fmoved	sp@(28),fp3
-	fmovex	fp0,fp4
-	movel	a1,d0		| pointer to result
-
-	fmovex	fp2,fp5
-	fmulx	fp2,fp5
-	fmovex	fp3,fp6
-	fmulx	fp3,fp6
-	faddx	fp6,fp5
-
-	fmulx	fp2,fp4
-	fmulx	fp3,fp0
-	fmulx	fp1,fp2	
-	fmulx	fp1,fp3
-	faddx	fp3,fp4
-	fdivx	fp5,fp4
-	fsubx	fp0,fp2
-	fdivx	fp5,fp2
-
-	fmoved	fp4,a1@
-	fmoved	fp2,a1@(8)
-");	/* end asm	*/
+__asm(
+".text\t\n"
+".even\t\n"
+"_funcname:\t\n"
+"	.ascii	\"cdiv\\0\"\t\n"
+"	.even\t\n"
+"\t\n"
+".globl	_cdiv\t\n"
+"_cdiv:\t\n"
+"	fmoved	sp@(4),fp0\t\n"
+"	fmoved	sp@(12),fp1\t\n"
+"	fmoved	sp@(20),fp2\t\n"
+"	fmoved	sp@(28),fp3\t\n"
+"	fmovex	fp0,fp4\t\n"
+"	movel	a1,d0		| pointer to result\t\n"
+"\t\n"
+"	fmovex	fp2,fp5\t\n"
+"	fmulx	fp2,fp5\t\n"
+"	fmovex	fp3,fp6\t\n"
+"	fmulx	fp3,fp6\t\n"
+"	faddx	fp6,fp5\t\n"
+"\t\n"
+"	fmulx	fp2,fp4\t\n"
+"	fmulx	fp3,fp0\t\n"
+"	fmulx	fp1,fp2	\t\n"
+"	fmulx	fp1,fp3\t\n"
+"	faddx	fp3,fp4\t\n"
+"	fdivx	fp5,fp4\t\n"
+"	fsubx	fp0,fp2\t\n"
+"	fdivx	fp5,fp2\t\n"
+"\t\n"
+"	fmoved	fp4,a1@\t\n"
+"	fmoved	fp2,a1@(8)\t\n"
+);	/* end asm	*/
 #endif	__M68881__
 
 #ifdef	sfp004
@@ -255,10 +255,10 @@ _cdiv:
 #if defined (__M68881__) || defined (sfp004)
 # ifdef ERROR_CHECK	/* no error checking for now	*/
 
-__asm("	
-	pea	_funcname
-	jmp	c_err_check
-");	/* end asm	*/
+__asm(
+"	pea	_funcname\t\n"
+"	jmp	c_err_check\t\n"
+);	/* end asm	*/
 
 # else  ERROR_CHECK
 

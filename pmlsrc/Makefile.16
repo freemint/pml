@@ -22,7 +22,7 @@ CROSSINC = $(CROSSDIR)/include
 
 AR = m68k-atari-mint-ar
 CC = m68k-atari-mint-gcc
-CFLAGS = -mshort -O3 -DIEEE -DNO_DBUG -DOLD -I.
+CFLAGS = -mshort -O2 -DIEEE -DNO_DBUG -I.
 
 LIB = $(CROSSLIB)
 
