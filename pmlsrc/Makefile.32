@@ -15,13 +15,13 @@
 #	they will be loaded into the library archive.  Although
 #	some machines support randomly ordered libraries, ordering
 #	them correctly doesn't hurt...
-CROSSDIR = /usr/local/m68k-atari-mint/m68k-atari-mint
+CROSSDIR = /dsrg/bammi/cross-minix
 CROSSLIB = $(CROSSDIR)/lib
 CROSSBIN = $(CROSSDIR)/bin
 CROSSINC = $(CROSSDIR)/include
 
-AR = m68k-atari-mint-ar
-CC = m68k-atari-mint-gcc
+AR = /dsrg/bammi/cross-gcc/bin/car
+CC = $(CROSSBIN)/mgcc
 CFLAGS = -O2 -DIEEE -DNO_DBUG -I.
 
 LIB = $(CROSSLIB)

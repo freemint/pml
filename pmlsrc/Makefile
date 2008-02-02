@@ -1,4 +1,4 @@
-CROSSDIR = /usr/local/m68k-atari-mint/m68k-atari-mint
+CROSSDIR = /dsrg/bammi/cross-minix
 CROSSLIB = $(CROSSDIR)/lib
 CROSSBIN = $(CROSSDIR)/bin
 CROSSINC = $(CROSSDIR)/include

@@ -1,4 +1,4 @@
-CC = m68k-atari-mint-gcc
+CC = gcc
 CFLAGS =	-DNO_DBUG -O -I../pmlsrc
 LIBS =		-lm -v
 
