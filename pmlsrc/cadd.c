@@ -78,7 +78,7 @@ COMPLEX z2;
     z1.imag += z2.imag;
     return (z1);
 }
-#endif !defined (__M68881__) && !defined (sfp004)
+#endif /* !defined (__M68881__) #endif !defined (__M68881__) && !defined (sfp004)#endif !defined (__M68881__) && !defined (sfp004) !defined (sfp004) */
 
 #ifdef	__M68881__
 __asm(
@@ -96,7 +96,7 @@ __asm(
 "	fmoved	fp0,a1@		| return z.real\t\n"
 "	fmoved	fp1,a1@(8)	| return z.imag\t\n"
 );	/* end asm	*/
-#endif	__M68881__
+#endif /* __M68881__ */
 
 #ifdef	sfp004
 __asm("
@@ -146,7 +146,7 @@ _cadd:
 	movel	a0@(zahl),a1@(8)
 	movel	a0@(zahl),a1@(12)
 ");	/* end asm	*/
-#endif	sfp004
+#endif /* sfp004 */
 
 #if defined (__M68881__) || defined (sfp004)
 # ifdef ERROR_CHECK	/* no error checking for now	*/
@@ -154,9 +154,9 @@ __asm(
 "	pea	_funcname\t\n"
 "	jmp	c_err_check\t\n"
 );	/* end asm	*/
-# else  ERROR_CHECK
+# else /* ERROR_CHECK */
 
 __asm("rts");
 
-# endif ERROR_CHECK
-#endif defined (__M68881__) || defined (sfp004)
+# endif /* ERROR_CHECK */
+#endif /* defined (__M68881__) || defined (sfp004) */

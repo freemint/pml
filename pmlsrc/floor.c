@@ -76,7 +76,7 @@ double floor (double x)
 		  : "dmi" (rounding_mode));
   return value;
 }
-#endif __M68881__
+#endif /* __M68881__ */
 
 #ifdef	sfp004
-#endif	sfp004
+#endif /* sfp004 */

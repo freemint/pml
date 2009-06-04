@@ -64,7 +64,7 @@ double rint(double x)
 #endif 0
   return value;
 }
-#endif __M68881__
+#endif /* __M68881__ */
 #ifdef	sfp004
 __asm("
 
@@ -100,4 +100,4 @@ _rint:
  	rts
 
 ");
-#endif	sfp004
+#endif /* sfp004 */

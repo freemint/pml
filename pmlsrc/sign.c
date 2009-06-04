@@ -84,7 +84,7 @@ double y;
     return (rtnval);
 }
 
-#else	OLD 	/* mjr: assembler version for  all machines */
+#else /* OLD */ /* mjr: assembler version for  all machines */
 __asm(
 ".text\t\n"
 ".even\t\n"
@@ -101,4 +101,4 @@ __asm(
 "	rts\t\n"
 );	/* end asm	*/
 
-#endif	OLD
+#endif /* OLD */

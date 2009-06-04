@@ -77,7 +77,7 @@ COMPLEX z;
     result.imag = -sin(z.real) * sinh(z.imag);
     return (result);
 }
-#endif !defined (__M68881__) && !defined (sfp004)
+#endif /* !defined (__M68881__) #endif !defined (__M68881__) && !defined (sfp004)#endif !defined (__M68881__) && !defined (sfp004) !defined (sfp004) */
 
 #if defined (__M68881__) || defined (sfp004)
 # ifdef ERROR_CHECK	/* no error checking for now	*/
@@ -87,7 +87,7 @@ __asm(
 "	.ascii	\"ccos\\0\"\t\n"
 "	.even\t\n"
 );	/* end asm	*/
-# endif ERROR_CHECK
+# endif /* ERROR_CHECK */
 #endif defined (__M68881__) || defined (sfp004)
 
 #ifdef	__M68881__
@@ -110,7 +110,7 @@ __asm(
 "	fmulx	fp3,fp1		| result.imag\t\n"
 "	fmoved	fp1,a1@(8)	|\t\n"
 );	/* end asm	*/
-#endif	__M68881__
+#endif /* __M68881__ */
 
 #ifdef	sfp004
 __asm("
@@ -186,7 +186,7 @@ _ccos:
 	movel	a0@,a1@(8)
 	movel	a0@,a1@(12)
 ");	/* end asm	*/
-#endif	sfp004
+#endif /* sfp004 */
 
 
 #if defined (__M68881__) || defined (sfp004)
@@ -195,9 +195,9 @@ __asm(
 "	pea	_funcname\t\n"
 "	jmp	c_err_check\t\n"
 );	/* end asm	*/
-# else  ERROR_CHECK
+# else /* ERROR_CHECK */
 
 __asm("rts");
 
-# endif ERROR_CHECK
+# endif /* ERROR_CHECK */
 #endif defined (__M68881__) || defined (sfp004)

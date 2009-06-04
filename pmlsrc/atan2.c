@@ -126,7 +126,7 @@ double x;
     return (result);
 }
 
-#endif !defined (__M68881__) && !defined (sfp004)
+#endif /* !defined (__M68881__) #endif !defined (__M68881__) && !defined (sfp004)#endif !defined (__M68881__) && !defined (sfp004) !defined (sfp004) */
 #ifdef	__M68881__
 __asm(
 ".text\t\n"
@@ -177,7 +177,7 @@ __asm(
 "	movel	#-1,d1		|\t\n"
 "	bra	4b\t\n"
 );	/* end asm	*/
-#endif	__M68881__
+#endif /* __M68881__ */
 
 #ifdef	sfp004
 __asm("
@@ -277,4 +277,4 @@ _atan2:
 	movel	#-1,d1		|
 	bra	4b
 ");	/* end asm	*/
-#endif	sfp004
+#endif /* sfp004 */

@@ -90,7 +90,7 @@ __asm(
 "	.ascii \"cexp\\0\"\t\n"
 "	.even\t\n"
 );
-#endif	ERROR_CHECK
+#endif /* ERROR_CHECK */
 #endif	!defined (__M68881__) && !defined (sfp004)
 
 #ifdef	__M68881__
@@ -112,7 +112,7 @@ __asm(
 "	fmoved	fp2,a1@(8)	| fetch result.imag\t\n"
 "	fmovex	sp@+,fp2\t\n"
 );	/* end asm	*/
-#endif	__M68881__
+#endif /* __M68881__ */
 
 #ifdef	sfp004
 __asm("
@@ -181,7 +181,7 @@ _cexp:
 	movel	a0@(zahl),a1@(8)
 	movel	a0@(zahl),a1@(12)
 ");	/* end asm	*/
-#endif	sfp004
+#endif /* sfp004 */
 
 
 #if defined (__M68881__) || defined (sfp004)
@@ -190,9 +190,9 @@ __asm(
 "	pea	_funcname\t\n"
 "	jmp	c_err_check\t\n"
 );	/* end asm	*/
-# else  ERROR_CHECK
+# else /* ERROR_CHECK */
 
 __asm("rts");
 
-# endif ERROR_CHECK
+# endif /* ERROR_CHECK */
 #endif defined (__M68881__) || defined (sfp004)

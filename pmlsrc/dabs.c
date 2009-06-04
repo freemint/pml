@@ -66,7 +66,7 @@ __asm(
 "	rts\t\n"
 );
 
-#else OLD
+#else /* OLD */
 
 #include <stdio.h>
 #include <math.h>
@@ -117,4 +117,4 @@ double x;
 }
 #endif
 
-#endif OLD
+#endif /* OLD */

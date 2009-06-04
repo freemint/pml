@@ -21,7 +21,7 @@ install : $(ALL)
 	mkdir -p $(CROSSLIB)/mshort
 	cp libpml.a $(CROSSLIB)/mshort/libm.a
 	mkdir -p $(CROSSINC)
-	cp pml.h $(CROSSINC)
+	cp math.h $(CROSSINC)
 
 clean:
 	make -f Makefile.16 clean

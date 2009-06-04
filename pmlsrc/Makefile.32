@@ -44,7 +44,7 @@ LEVEL3 =	casin.o cacos.o cmult.o catan.o ccosh.o clog.o \
 
 LEVEL4 =	cadd.o
 
-OBJ =		$(LEVEL4) $(LEVEL3) $(LEVEL2) $(LEVEL1) $(LEVEL0)
+OBJ =		$(LEVEL4) $(LEVEL2) $(LEVEL1) $(LEVEL0)
 
 #
 #	The default thing to make.

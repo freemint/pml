@@ -112,7 +112,7 @@ zahl =	  0
 
 ");	/* end asm	*/
 
-#endif	sfp004
+#endif /* sfp004 */
 #if defined (__M68881__) || defined (sfp004)
     __asm(".text; .even");
 
@@ -171,7 +171,7 @@ __asm(
 "	moveml	a7@+,d0-d1	| return_value\t\n"
     );	/* end asm	*/
 
-#endif	__M68881__
+#endif /* __M68881__ */
 #ifdef	sfp004
     __asm("
 	lea	0xfffa50,a0
@@ -185,7 +185,7 @@ __asm(
 	movel	a0@,d1
     ");	/* end asm	*/
 
-#endif	sfp004
+#endif /* sfp004 */
 #if defined (__M68881__) || defined (sfp004)
 # ifdef	ERROR_CHECK
     __asm(

@@ -125,7 +125,7 @@ __asm(
 "	fmoved	fp0,a7@-	|\t\n"
 "	moveml	a7@+,d0-d1	| return arg\t\n"
 );
-#endif	__M68881__
+#endif /* __M68881__ */
 
 #ifdef	sfp004
 __asm("
@@ -189,7 +189,7 @@ _cabs:
 	movel	a0@(zahl),d0
 	movel	a0@(zahl),d1
 ");	/* end asm	*/
-#endif	sfp004	
+#endif /* sfp004 */	
 
 #if defined (__M68881__) || defined (sfp004)
 # ifdef ERROR_CHECK

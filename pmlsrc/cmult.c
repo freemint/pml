@@ -79,7 +79,7 @@ COMPLEX z2;
 
     return (result);
 }
-#endif !defined (__M68881__) && !defined (sfp004)
+#endif /* !defined (__M68881__) #endif !defined (__M68881__) && !defined (sfp004)#endif !defined (__M68881__) && !defined (sfp004) !defined (sfp004) */
 #ifdef	__M68881__
 __asm(
 ".text\t\n"
@@ -108,7 +108,7 @@ __asm(
 "	fmoved	fp4,a1@\t\n"
 "	fmoved	fp2,a1@(8)\t\n"
 );	/* end asm	*/
-#endif	__M68881__
+#endif /* __M68881__ */
 
 #ifdef	sfp004
 __asm("
@@ -185,7 +185,7 @@ _cmult:
 	movel	a0@,a1@(8)
 	movel	a0@,a1@(12)
 ");	/* end asm	*/
-#endif	sfp004
+#endif /* sfp004 */
 
 #if defined (__M68881__) || defined (sfp004)
 # ifdef ERROR_CHECK	/* no error checking for now	*/
@@ -195,9 +195,9 @@ __asm(
 "	jmp	c_err_check\t\n"
 );	/* end asm	*/
 
-# else  ERROR_CHECK
+# else /* ERROR_CHECK */
 
 __asm("rts");
 
-# endif ERROR_CHECK
+# endif /* ERROR_CHECK */
 #endif defined (__M68881__) || defined (sfp004)
