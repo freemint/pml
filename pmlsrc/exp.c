@@ -201,7 +201,7 @@ eset:
 	xcpt.arg1 = x;
 	if (!matherr (&xcpt)) {
             errno = ERANGE;
-	    fprintf (stderr, "%s: %sFLOW error\n", funcname, xcptstr);
+	    //fprintf (stderr, "%s: %sFLOW error\n", funcname, xcptstr);
 	}
     } else {
 	x *= LOG2E;
@@ -350,7 +350,7 @@ __asm(
 "error_exit:\t\n"
 "	pea	_Error_String	|\t\n"
 "	pea	__iob+52	|\t\n"
-"	jbsr	_fprintf	|\t\n"
+//"	jbsr	_fprintf	|\t\n"
 "	addl	#12,a7		|\t\n"
 "	moveml	a7@+,d0-d1\t\n"
 "	rts\t\n"

@@ -87,7 +87,7 @@ double x;
 	xcpt.name = funcname;
 	xcpt.arg1 = x;
 	if (!matherr (&xcpt)) {
-	    fprintf (stderr, "%s: PLOSS error\n", funcname);
+	    //fprintf (stderr, "%s: PLOSS error\n", funcname);
 	    errno = ERANGE;
 	    if (positive) {
 		xcpt.retval = 1.0;
@@ -216,7 +216,7 @@ __asm(
 "error_exit:\t\n"
 "	pea	_Error_String	|\t\n"
 "	pea	__iob+52	|\t\n"
-"	jbsr	_fprintf	|\t\n"
+//"	jbsr	_fprintf	|\t\n"
 "	addl	#12,a7		|\t\n"
 "	moveml	a7@+,d0-d1\t\n"
 "	rts\t\n"

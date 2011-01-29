@@ -409,7 +409,7 @@ __asm(
 "error_exit:\t\n"
 "	pea	_Error_String	|\t\n"
 "	pea	__iob+52	|\t\n"
-"	jbsr	_fprintf	|\t\n"
+//"	jbsr	_fprintf	|\t\n"
 "	addl	#12,a7		|\t\n"
 "	moveml	a7@+,d0-d1\t\n"
 "	rts\t\n"

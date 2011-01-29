@@ -22,7 +22,7 @@ CROSSINC = $(CROSSDIR)/include
 
 AR = /dsrg/bammi/cross-gcc/bin/car
 CC = $(CROSSBIN)/mgcc
-CFLAGS = -mshort -O2 -DIEEE -DNO_DBUG -I.
+CFLAGS = -mshort -O2 -fomit-frame-pointer -DIEEE -DNO_DBUG -I.
 
 LIB = $(CROSSLIB)
 

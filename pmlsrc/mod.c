@@ -218,8 +218,9 @@ __asm(
 "error_exit:\t\n"
 "	pea	_Error_String	|\t\n"
 "	pea	__iob+52	|\t\n"
-"	jbsr	_fprintf	|\t\n"
+//"	jbsr	_fprintf	|\t\n"
 "	addl	#12,a7		|\t\n"
+"	moveml	a7@+,d0-d1\t\n"
 "	rts\t\n"
     );
 # else	ERROR_CHECK
@@ -242,7 +243,7 @@ double fmod (double value, double base)
 	xcpt.arg1 = base;
 	xcpt.type = DOMAIN;
 	if (!matherr (&xcpt)) {
-	    fprintf (stderr, "%s: ZERO DIVIDE error\n", "fmod");
+	    //fprintf (stderr, "%s: ZERO DIVIDE error\n", "fmod");
 	    errno = EDOM;
 	}
     } else {
