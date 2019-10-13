@@ -31,6 +31,8 @@ ifeq ($(WITH_SHORT_LIBS), 1)
 endif
 	mkdir -p $(CROSSINC)
 	cp math.h $(CROSSINC)
+	mkdir -p $(CROSSINC)/bits
+	cp bits/nan.h bits/huge_val.h bits/mathdef.h $(CROSSINC)/bits
 
 clean:
 	make -f Makefile.32 clean
